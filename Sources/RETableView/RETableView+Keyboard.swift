@@ -18,7 +18,7 @@ extension RETableView {
         case 36, 76:
             selectPosition()
         case 51, 117:
-            handleDeleteKays()
+            handleDeleteKeys()
         case 115:
             move(to: 0)
         case 116:
@@ -51,8 +51,8 @@ extension RETableView {
         }
     }
 
-    private func handleDeleteKays() {
-        if lastSelectedIndex != nil || selectedRows.isEmpty {
+    private func handleDeleteKeys() {
+        if lastSelectedIndex == nil || selectedRows.isEmpty {
             return
         }
         delegate?.didRemove(indexSet: selectedRows)

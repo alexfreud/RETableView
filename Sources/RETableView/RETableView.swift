@@ -32,10 +32,12 @@ final public class RETableView: NSView {
         }
     }
 
+    public var selectedRows: Set<Int> = Set<Int>()
+
     // MARK: - Internal variables
 
     internal var offset = 0
-    internal var selectedRows: Set<Int> = Set<Int>()
+
     internal var lastSelectedIndex: Int?
 
     internal var visibleCount: Int {
@@ -131,7 +133,7 @@ final public class RETableView: NSView {
                       options: [.usesLineFragmentOrigin, .truncatesLastVisibleLine],
                       attributes: textAttributes,
                       context: nil)
-        let title = "\(position + 1). " + data.title
+        let title = (theme.showNumbers ? "\(position + 1). " : "") + data.title
         let textRect = NSRect(x: 0,
                               y: drawRect.origin.y,
                               width: frame.size.width - subtitleSize.width,
@@ -156,6 +158,8 @@ final public class RETableView: NSView {
     // MARK: - Overriding
 
     public override func draw(_ dirtyRect: NSRect) {
+        guard let context = NSGraphicsContext.current?.cgContext else { return }
+        context.setShouldAntialias(theme.antialiasing)
         theme.backgroundColor.setFill()
         dirtyRect.fill()
 
